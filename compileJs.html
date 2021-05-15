@@ -12,6 +12,7 @@
             <input  style='visibility:hidden;width:0px;height:0px' type='file' id='uploadInput' webkitdirectory mozdirectory></input>
         </div>
 
+        <div id="results"></div>
     </body>
     <script>
 
@@ -57,7 +58,6 @@ compiler.readFiles = function(){
 compiler.checkForCompletion = function(){
     setTimeout(function(){
         if(compiler.uploadedFiles.length == compiler.files.extensions.length){
-            
             compiler.setDownloadUI();
         }
         else{
@@ -138,6 +138,14 @@ compiler.readFile = function (file) {
     };
 };
 
+compiler.foundLines = {};
+compiler.missingLines = {};
+
+compiler.foundLines.js = []
+compiler.missingLines.js = []
+
+compiler.foundLines.css = []
+compiler.missingLines.css = []
 
 compiler.findScriptTags = function(){
     compiler.checkForIssues();
@@ -162,29 +170,111 @@ compiler.findScriptTags = function(){
         //check if this line contains a script tag
         if(line.indexOf(`<scr`+`ipt`) != -1 && line.indexOf('src=') != -1 && line.indexOf(`</scr`+`ipt>`) != -1){
             //find the appropriate bit of javascript
+            var found = false;
             for(var ii=0;ii<compiler.files.js.length;ii++){
                 var jsFile = compiler.files.js[ii];
                 if(line.indexOf(jsFile.name) != -1){
-                    html[i] = "<scr"+"ipt>"+jsFile.content+"</scr"+"ipt>";
+                    html[i] = "<scr"+"ipt>\n"+jsFile.content+"\n</scr"+"ipt>";
+                    found = true;
+                    compiler.foundLines.js.push({"original":line.trim(),"replace":jsFile.name})
                 }
+            }
+            if(!found){
+                compiler.missingLines.js.push({"original":line.trim()})
             }
         }
 
         else if(line.indexOf("<link") != -1 && line.indexOf('rel=') != -1 && line.indexOf("href=") != -1){
             //find the appropriate bit of css
+            var found = false;
             for(var ii=0;ii<compiler.files.css.length;ii++){
                 var cssFile = compiler.files.css[ii];
                 if(line.indexOf(cssFile.name) != -1){
-                    html[i] = "<st"+"yle>"+cssFile.content+"</st"+"yle>";
+                    compiler.foundLines.js.push({"original":line.trim(),"replace":cssFile.name})
+                    html[i] = "<st"+"yle>\n"+cssFile.content+"\n</st"+"yle>";
+                    found = true;
                 }
+            }
+            if(!found){
+                compiler.missingLines.css.push({"original":line.trim()})
             }
         }
 
     }
     compiler.output = html;
-
+    compiler.writeResults();
     var blob = new Blob([html.join(`\n`)], {type: "text/plain;charset=utf-8"});
     saveAs(blob, "newFile.html");
+}
+
+compiler.writeResults = function(){
+    var html = "";
+    html += "<h3>Altered Javascript Lines</h3>"
+    html += "<table class='table'>"
+        html += "<thead class='thead-dark'><tr>"
+            html += "<td>#</td>"
+            html += "<td>Original Line</td>"
+            html += "<td>Replacement File</td>"
+        html += "</tr></thead?"
+        for(var i=0;i<compiler.foundLines.js.length;i++){
+            var line = compiler.foundLines.js[i];
+            html += "<tr>"
+                html += "<td>"+(i+1)+"</td>"
+                html += "<td>"+line.original.replace("<","&lt;").replace(">","&gt;")+"</td>"
+                html += "<td>"+line.replace+"</td>"
+            html += "</tr>"
+        }
+    html += '</table>'
+    html += "<hr>"
+    html += "<h3>Unaltered Javascript Lines</h3>"
+    html += "<table class='table'>"
+        html += "<thead class='thead-dark'><tr>"
+            html += "<td>#</td>"
+            html += "<td>Line</td>"
+            html += "</tr></thead?"
+        for(var i=0;i<compiler.missingLines.js.length;i++){
+            var line = compiler.missingLines.js[i];
+            html += "<tr>"
+                html += "<td>"+(i+1)+"</td>"
+                html += "<td>"+line.original.replace("<","&lt;").replace(">","&gt;")+"</td>"
+            html += "</tr>"
+        }
+    html += '</table>'
+    html += "<hr>"
+    html += "<h3>Altered CSS Lines</h3>"
+    html += "<table class='table'>"
+        html += "<thead class='thead-dark'><tr>"
+            html += "<td>#</td>"
+            html += "<td>Original Line</td>"
+            html += "<td>Replacement File</td>"
+            html += "</tr></thead>"
+        for(var i=0;i<compiler.foundLines.css.length;i++){
+            var line = compiler.foundLines.css[i];
+            html += "<tr>"
+                html += "<td>"+(i+1)+"</td>"
+                html += "<td>"+line.original.replace("<","&lt;").replace(">","&gt;")+"</td>"
+                html += "<td>"+line.replace+"</td>"
+            html += "</tr>"
+        }
+    html += '</table>'
+    html += "<hr>"
+    html += "<h3>Unaltered CSS Lines</h3>"
+    html += "<table class='table'>"
+        html += "<thead class='thead-dark'><tr>"
+            html += "<td>#</td>"
+            html += "<td>Line</td>"
+        html += "</tr></thead>"
+        for(var i=0;i<compiler.missingLines.css.length;i++){
+            var line = compiler.missingLines.css[i];
+            html += "<tr>"
+                html += "<td>"+(i+1)+"</td>"
+                html += "<td>"+line.original.replace("<","&lt;").replace(">","&gt;")+"</td>"
+            html += "</tr>"
+        }
+    html += '</table>'
+
+
+    $("#results").html(html)
 }
 
 
