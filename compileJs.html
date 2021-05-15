@@ -212,9 +212,9 @@ compiler.writeResults = function(){
     html += "<h3>Altered Javascript Lines</h3>"
     html += "<table class='table'>"
         html += "<thead class='thead-dark'><tr>"
-            html += "<td>#</td>"
-            html += "<td>Original Line</td>"
-            html += "<td>Replacement File</td>"
+            html += "<th>#</th>"
+            html += "<th>Original Line</th>"
+            html += "<th>Replacement File</th>"
         html += "</tr></thead><tbody>"
         for(var i=0;i<compiler.foundLines.js.length;i++){
             var line = compiler.foundLines.js[i];
@@ -229,9 +229,9 @@ compiler.writeResults = function(){
     html += "<h3>Unaltered Javascript Lines</h3>"
     html += "<table class='table'>"
         html += "<thead class='thead-dark'><tr>"
-            html += "<td>#</td>"
-            html += "<td>Line</td>"
-            html += "</tr></thead><tbody>"
+            html += "<th>#</th>"
+            html += "<th>Line</th>"
+        html += "</tr></thead><tbody>"
         for(var i=0;i<compiler.missingLines.js.length;i++){
             var line = compiler.missingLines.js[i];
             html += "<tr>"
@@ -244,9 +244,9 @@ compiler.writeResults = function(){
     html += "<h3>Altered CSS Lines</h3>"
     html += "<table class='table'>"
         html += "<thead class='thead-dark'><tr>"
-            html += "<td>#</td>"
-            html += "<td>Original Line</td>"
-            html += "<td>Replacement File</td>"
+            html += "<th>#</th>"
+            html += "<th>Original Line</th>"
+            html += "<th>Replacement File</th>"
         html += "</tr></thead><tbody>"
         for(var i=0;i<compiler.foundLines.css.length;i++){
             var line = compiler.foundLines.css[i];
@@ -261,8 +261,8 @@ compiler.writeResults = function(){
     html += "<h3>Unaltered CSS Lines</h3>"
     html += "<table class='table'>"
         html += "<thead class='thead-dark'><tr>"
-            html += "<td>#</td>"
-            html += "<td>Line</td>"
+            html += "<th>#</th>"
+            html += "<th>Line</th>"
         html += "</tr></thead><tbody>"
         for(var i=0;i<compiler.missingLines.css.length;i++){
             var line = compiler.missingLines.css[i];
