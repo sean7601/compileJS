@@ -215,7 +215,7 @@ compiler.writeResults = function(){
             html += "<td>#</td>"
             html += "<td>Original Line</td>"
             html += "<td>Replacement File</td>"
-        html += "</tr></thead?"
+        html += "</tr></thead><tbody>"
         for(var i=0;i<compiler.foundLines.js.length;i++){
             var line = compiler.foundLines.js[i];
             html += "<tr>"
@@ -224,14 +224,14 @@ compiler.writeResults = function(){
                 html += "<td>"+line.replace+"</td>"
             html += "</tr>"
         }
-    html += '</table>'
+    html += '</tbody></table>'
     html += "<hr>"
     html += "<h3>Unaltered Javascript Lines</h3>"
     html += "<table class='table'>"
         html += "<thead class='thead-dark'><tr>"
             html += "<td>#</td>"
             html += "<td>Line</td>"
-            html += "</tr></thead?"
+            html += "</tr></thead><tbody>"
         for(var i=0;i<compiler.missingLines.js.length;i++){
             var line = compiler.missingLines.js[i];
             html += "<tr>"
@@ -239,7 +239,7 @@ compiler.writeResults = function(){
                 html += "<td>"+line.original.replace("<","&lt;").replace(">","&gt;")+"</td>"
             html += "</tr>"
         }
-    html += '</table>'
+    html += '</tbody></table>'
     html += "<hr>"
     html += "<h3>Altered CSS Lines</h3>"
     html += "<table class='table'>"
@@ -247,7 +247,7 @@ compiler.writeResults = function(){
             html += "<td>#</td>"
             html += "<td>Original Line</td>"
             html += "<td>Replacement File</td>"
-            html += "</tr></thead>"
+        html += "</tr></thead><tbody>"
         for(var i=0;i<compiler.foundLines.css.length;i++){
             var line = compiler.foundLines.css[i];
             html += "<tr>"
@@ -256,14 +256,14 @@ compiler.writeResults = function(){
                 html += "<td>"+line.replace+"</td>"
             html += "</tr>"
         }
-    html += '</table>'
+    html += '</tbody></table>'
     html += "<hr>"
     html += "<h3>Unaltered CSS Lines</h3>"
     html += "<table class='table'>"
         html += "<thead class='thead-dark'><tr>"
             html += "<td>#</td>"
             html += "<td>Line</td>"
-        html += "</tr></thead>"
+        html += "</tr></thead><tbody>"
         for(var i=0;i<compiler.missingLines.css.length;i++){
             var line = compiler.missingLines.css[i];
             html += "<tr>"
@@ -271,10 +271,72 @@ compiler.writeResults = function(){
                 html += "<td>"+line.original.replace("<","&lt;").replace(">","&gt;")+"</td>"
             html += "</tr>"
         }
-    html += '</table>'
+    html += '</tbody></table>'
 
 
     $("#results").html(html)
+
+    $("#results").html(`<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>`)
 }
 
 
