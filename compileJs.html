@@ -138,6 +138,54 @@ compiler.readFile = function (file) {
     };
 };
 
+
+compiler.extractFileNameJs = function(line){
+    var words;
+    if(line.indexOf("'") != -1){
+        words = line.split("'");
+    }
+    else{
+        words = line.split('"');
+    }
+    
+    for(var i=0;i<words.length;i++){
+        var word = words[i]
+        if(word.indexOf("src") != -1){
+            console.log(word)
+            word = words[i+1]
+            console.log(word)
+            words = word.split("/");
+            console.log(words)
+            return words[words.length-1]
+        }
+    }
+}
+
+
+compiler.extractFileNameCss = function(line){
+    var words;
+    if(line.indexOf("'") != -1){
+        words = line.split("'");
+    }
+    else{
+        words = line.split('"');
+    }
+    for(var i=0;i<words.length;i++){
+        var word = words[i]
+
+        if(word.indexOf("href") != -1){
+            console.log(word)
+            word = words[i+1]
+            console.log(word)
+            words = word.split("/");
+            console.log(words)
+            return words[words.length-1]
+
+        }
+    }
+}
+
+
 compiler.foundLines = {};
 compiler.missingLines = {};
 
@@ -155,7 +203,7 @@ compiler.findScriptTags = function(){
     }
     else{
         for(var i=0;i<compiler.files.html.length;i++){
-            if(compiler.files.html[i].name.indexOf('index') != -1){
+            if(compiler.files.html[i].name == "index.html"){
                 content = compiler.files.html[i].content
             }
         }
@@ -173,7 +221,9 @@ compiler.findScriptTags = function(){
             var found = false;
             for(var ii=0;ii<compiler.files.js.length;ii++){
                 var jsFile = compiler.files.js[ii];
-                if(line.indexOf(jsFile.name) != -1){
+                var lineFile = compiler.extractFileNameJs(line)
+                //console.log(lineFile,jsFile.name,lineFile.trim()==jsFile.name)
+                if(lineFile.trim() == jsFile.name.trim()){
                     html[i] = "<scr"+"ipt>\n"+jsFile.content+"\n</scr"+"ipt>";
                     found = true;
                     compiler.foundLines.js.push({"original":line.trim(),"replace":jsFile.name})
@@ -189,8 +239,9 @@ compiler.findScriptTags = function(){
             var found = false;
             for(var ii=0;ii<compiler.files.css.length;ii++){
                 var cssFile = compiler.files.css[ii];
-                if(line.indexOf(cssFile.name) != -1){
-                    compiler.foundLines.js.push({"original":line.trim(),"replace":cssFile.name})
+                var lineFile = compiler.extractFileNameCss(line)
+                if(lineFile.trim() == cssFile.name.trim()){
+                    compiler.foundLines.css.push({"original":line.trim(),"replace":cssFile.name})
                     html[i] = "<st"+"yle>\n"+cssFile.content+"\n</st"+"yle>";
                     found = true;
                 }
