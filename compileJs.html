@@ -151,11 +151,8 @@ compiler.extractFileNameJs = function(line){
     for(var i=0;i<words.length;i++){
         var word = words[i]
         if(word.indexOf("src") != -1){
-            console.log(word)
             word = words[i+1]
-            console.log(word)
             words = word.split("/");
-            console.log(words)
             return words[words.length-1]
         }
     }
@@ -174,11 +171,8 @@ compiler.extractFileNameCss = function(line){
         var word = words[i]
 
         if(word.indexOf("href") != -1){
-            console.log(word)
             word = words[i+1]
-            console.log(word)
             words = word.split("/");
-            console.log(words)
             return words[words.length-1]
 
         }
