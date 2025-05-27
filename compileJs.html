@@ -1,32 +1,34 @@
 <html>
-	<script src="eruda.js"></script>
-	<script>
-		eruda.init()
-		eruda.get('console').config.set('catchGlobalErr', true)
-		
-		eruda.get('console').config.set('displayExtraInfo', true)
-		
-		eruda.get('console').config.set('overrideConsole', true)
-	
-	
-	</script>
-
+<head>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.js"></script>
-    
-    <body>
-        <div id="content">
-            <button id="clickableStartUpload" title="" data-placement="right" style="width:44%;margin-right:3%;margin-left:3%" class="btn btn.lg btn-primary tooltiper m-3">
-            <span style="font-size:larger">Load Upper Directory</span>
-            </button>
-            <input  style='visibility:hidden;width:0px;height:0px' type='file' id='uploadInput' webkitdirectory mozdirectory></input>
+    <script src="https://cdn.jsdelivr.net/npm/terser/dist/bundle.min.js"></script>
+    <script>(function(a,b){if("function"==typeof define&&define.amd)define([],b);else if("undefined"!=typeof exports)b();else{b(),a.FileSaver={exports:{}}.exports}})(this,function(){"use strict";function b(a,b){return"undefined"==typeof b?b={autoBom:!1}:"object"!=typeof b&&(console.warn("Deprecated: Expected third argument to be a object"),b={autoBom:!b}),b.autoBom&&/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(a.type)?new Blob(["\uFEFF",a],{type:a.type}):a}function c(a,b,c){var d=new XMLHttpRequest;d.open("GET",a),d.responseType="blob",d.onload=function(){g(d.response,b,c)},d.onerror=function(){console.error("could not download file")},d.send()}function d(a){var b=new XMLHttpRequest;b.open("HEAD",a,!1);try{b.send()}catch(a){}return 200<=b.status&&299>=b.status}function e(a){try{a.dispatchEvent(new MouseEvent("click"))}catch(c){var b=document.createEvent("MouseEvents");b.initMouseEvent("click",!0,!0,window,0,0,0,80,20,!1,!1,!1,!1,0,null),a.dispatchEvent(b)}}var f="object"==typeof window&&window.window===window?window:"object"==typeof self&&self.self===self?self:"object"==typeof global&&global.global===global?global:void 0,a=/Macintosh/.test(navigator.userAgent)&&/AppleWebKit/.test(navigator.userAgent)&&!/Safari/.test(navigator.userAgent),g=f.saveAs||("object"!=typeof window||window!==f?function(){}:"download"in HTMLAnchorElement.prototype&&!a?function(b,g,h){var i=f.URL||f.webkitURL,j=document.createElement("a");g=g||b.name||"download",j.download=g,j.rel="noopener","string"==typeof b?(j.href=b,j.origin===location.origin?e(j):d(j.href)?c(b,g,h):e(j,j.target="_blank")):(j.href=i.createObjectURL(b),setTimeout(function(){i.revokeObjectURL(j.href)},4E4),setTimeout(function(){e(j)},0))}:"msSaveOrOpenBlob"in navigator?function(f,g,h){if(g=g||f.name||"download","string"!=typeof f)navigator.msSaveOrOpenBlob(b(f,h),g);else if(d(f))c(f,g,h);else{var i=document.createElement("a");i.href=f,i.target="_blank",setTimeout(function(){e(i)})}}:function(b,d,e,g){if(g=g||open("","_blank"),g&&(g.document.title=g.document.body.innerText="downloading..."),"string"==typeof b)return c(b,d,e);var h="application/octet-stream"===b.type,i=/constructor/i.test(f.HTMLElement)||f.safari,j=/CriOS\/[\d]+/.test(navigator.userAgent);if((j||h&&i||a)&&"undefined"!=typeof FileReader){var k=new FileReader;k.onloadend=function(){var a=k.result;a=j?a:a.replace(/^data:[^;]*;/,"data:attachment/file;"),g?g.location.href=a:location=a,g=null},k.readAsDataURL(b)}else{var l=f.URL||f.webkitURL,m=l.createObjectURL(b);g?g.location=m:location.href=m,g=null,setTimeout(function(){l.revokeObjectURL(m)},4E4)}});f.saveAs=g.saveAs=g,"undefined"!=typeof module&&(module.exports=g)});
+    //# sourceMappingURL=FileSaver.min.js.map</script>
+    <style>
+        body { padding-top: 20px; }
+        #content { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="text-center">
+            <h1>HTML/JS/CSS Compiler</h1>
+            <p class="lead">Upload a directory containing your HTML, JS, and CSS files to compile them into a single HTML file.</p>
         </div>
 
-        <div id="results"></div>
-    </body>
-    <script>
+        <div id="content" class="text-center">
+            <button id="clickableStartUpload" title="Select the root folder of your project" data-placement="right" style="width:auto; padding: 10px 20px;" class="btn btn-lg btn-primary tooltiper m-3">
+            <span style="font-size:larger">Load Project Directory</span>
+            </button>
+            <input style='visibility:hidden;width:0px;height:0px' type='file' id='uploadInput' webkitdirectory mozdirectory></input>
+        </div>
+
+        <div id="results" class="mt-4"></div>
+    </div>
+</body>
+<script>
 
 var compiler = {};
 
@@ -50,17 +52,25 @@ compiler.files.extensions = []
 compiler.files.fileNames = []
 compiler.files.unsorted = []
 compiler.output = "";
+
 compiler.loadoldDatabaseUpload = function (event) {
-    compiler.data = [];
+    compiler.files = {
+        names: [], html: [], js: [], css: [], extensions: [], fileNames: [], unsorted: []
+    };
+    compiler.foundLines = { js: [], css: [] };
+    compiler.missingLines = { js: [], css: [] };
+    compiler.output = "";
+    $("#results").html("");
+    terserAlerted = false; // Reset Terser alert status for new upload
+
     if (event.target.files && event.target.files.length) {
         compiler.uploadedFiles = event.target.files
     }
-
     compiler.readFiles()
-
 };
 
 compiler.readFiles = function(){
+    compiler.files.extensions = [];
     for(var i=0;i<compiler.uploadedFiles.length;i++){
         compiler.readFile(compiler.uploadedFiles[i])
     }
@@ -68,391 +78,419 @@ compiler.readFiles = function(){
 }
 
 compiler.checkForCompletion = function(){
-    setTimeout(function(){
-        if(compiler.uploadedFiles.length == compiler.files.extensions.length){
-            compiler.setDownloadUI();
-        }
-        else{
-            compiler.checkForCompletion()
-        }
-    },1000)
+    if (compiler.uploadedFiles && compiler.uploadedFiles.length === compiler.files.extensions.length) {
+        compiler.setDownloadUI();
+    } else {
+        setTimeout(compiler.checkForCompletion, 500);
+    }
 }
 
 compiler.checkForIssues = function(){
-    let seen = new Set();
-    var hasHtmlDuplicates = compiler.files.html.some(function(currentObject) {
-        return seen.size === seen.add(currentObject.name).size;
-    });
-    seen = new Set();
-    var hasJsDuplicates = compiler.files.js.some(function(currentObject) {
-        return seen.size === seen.add(currentObject.name).size;
-    });
-    seen = new Set();
-    var hasCssDuplicates = compiler.files.css.some(function(currentObject) {
-        return seen.size === seen.add(currentObject.name).size;
-    });
+    let issuesFound = false;
 
-    if(hasHtmlDuplicates){
-        alert("You have two or more HTML files with the same name, which is not allowed, regardless of folder location")
+    const findDuplicateBasenames = (fileList) => {
+        const basenamesSeen = new Map();
+        const duplicatesReport = {};
+        fileList.forEach(file => {
+            const basename = file.name.split('/').pop();
+            if (!basenamesSeen.has(basename)) {
+                basenamesSeen.set(basename, []);
+            }
+            basenamesSeen.get(basename).push(file.name);
+        });
+        basenamesSeen.forEach((paths, basename) => {
+            if (paths.length > 1) {
+                duplicatesReport[basename] = paths;
+            }
+        });
+        return duplicatesReport;
+    };
+
+    const formatDuplicateMessage = (duplicatesObject, fileType) => {
+        let message = `Duplicate ${fileType} Basenames Found. ${fileType} file basenames must be unique across all folders.\nConflicts:\n`;
+        for (const basename in duplicatesObject) {
+            message += `- Basename "${basename}" is used by files: ${duplicatesObject[basename].join(", ")}\n`;
+        }
+        return message;
+    };
+
+    const duplicateHtmlBasenames = findDuplicateBasenames(compiler.files.html || []);
+    const duplicateJsBasenames = findDuplicateBasenames(compiler.files.js || []);
+    const duplicateCssBasenames = findDuplicateBasenames(compiler.files.css || []);
+
+    if (Object.keys(duplicateHtmlBasenames).length > 0) {
+        alert(formatDuplicateMessage(duplicateHtmlBasenames, "HTML"));
+        issuesFound = true;
     }
-    if(hasJsDuplicates){
-        alert("You have two or more JS files with the same name, which is not allowed, regardless of folder location")
+    if (Object.keys(duplicateJsBasenames).length > 0) {
+        alert(formatDuplicateMessage(duplicateJsBasenames, "JavaScript"));
+        issuesFound = true;
     }
-    if(hasCssDuplicates){
-        alert("You have two or more CSS files with the same name, which is not allowed, regardless of folder location")
+    if (Object.keys(duplicateCssBasenames).length > 0) {
+        alert(formatDuplicateMessage(duplicateCssBasenames, "CSS"));
+        issuesFound = true;
     }
-    if(compiler.files.html.length > 1){
-        var noIndex = true
-        for(var i=0;i<compiler.files.html.length;i++){
-            if(compiler.files.html[i].name.indexOf('index') != -1){
-                noIndex = false
+
+    if (!compiler.files.html || compiler.files.html.length === 0) {
+        alert("Error: No HTML files found. You need at least one HTML file.");
+        issuesFound = true;
+    } else if (compiler.files.html.length > 1) {
+        if (Object.keys(duplicateHtmlBasenames).length === 0) { // Only check for index if no basename conflicts
+            let hasIndexFile = compiler.files.html.some(file => {
+                const basename = file.name.split('/').pop().toLowerCase();
+                return basename === 'index.html' || basename === 'index.htm';
+            });
+            if (!hasIndexFile) {
+                alert("Multiple HTML Files: None are 'index.html' or 'index.htm'. Ensure one HTML file is named 'index' as the base, or use a single HTML file.");
+                issuesFound = true;
             }
         }
-        if(noIndex){
-            alert("You have more than 1 html file and none are named index.html. Reduce to 1 html file or make one index.html")
-        }
-        else{
-            alert("We will use your index.html file as the base file")
-        }
-        
     }
-    if(compiler.files.html.length == 0 ){
-        alert("You need at least 1 html file")
-    }
+    return !issuesFound;
 }
 
-compiler.onlyUnique = function(value, index, self) {
-    return self.indexOf(value) === index;
-}
 
 compiler.setDownloadUI = function(){
-    $("#content").html("<button style='width:44%;margin-right:3%;margin-left:3%' class='btn btn.lg btn-secondary tooltiper m-3' onclick='compiler.findScriptTags()'>Download App</button>")
+    let downloadUIHtml = `
+        <div class="form-group text-center my-3">
+            <label class="d-block mb-2 font-weight-bold">JavaScript Output Format:</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="outputFormatOptions" id="outputMinified" value="minified" checked>
+                <label class="form-check-label" for="outputMinified">Minified (Optimized)</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="outputFormatOptions" id="outputNonMinified" value="non-minified">
+                <label class="form-check-label" for="outputNonMinified">Non-Minified (Readable)</label>
+            </div>
+        </div>
+        <button style='width:auto; padding: 10px 20px; margin-right:3%;margin-left:3%' class='btn btn-lg btn-success tooltiper m-3' onclick='compiler.processAndDownload()'>
+          <span style="font-size:larger">Compile & Download App</span>
+        </button>
+        <button style='width:auto; padding: 10px 20px;' class='btn btn-lg btn-secondary tooltiper m-3' onclick='window.location.reload()'>
+          <span style="font-size:larger">Start Over</span>
+        </button>
+    `;
+    $("#content").html(downloadUIHtml);
 }
 
 compiler.readFile = function (file) {
-    var ext = file.name.split(".").pop().toLowerCase();
-    var name = file.name;
-    var shortName = file.name;
-    shortName.split(".").pop()
-    var fileReader = new FileReader()
+    const ext = file.name.split(".").pop().toLowerCase();
+    const name = file.name; // Keep full path for uniqueness
+    const reader = new FileReader();
 
-    fileReader.readAsText(file);
-    fileReader.onload = () => {
-        var obj = fileReader.result
-        var results = {content:obj,ext:ext,name:name,shortName:name};
+    reader.onload = () => {
+        const content = reader.result;
+        const fileData = { content: content, ext: ext, name: name };
 
-        compiler.files.extensions.push(ext)
-        if(!compiler.files[ext]){
-            compiler.files[ext] = []
+        compiler.files.extensions.push(ext); // Count file for completion check
+        if (!compiler.files[ext]) {
+            compiler.files[ext] = [];
         }
-        compiler.files[ext].push(results)
-        compiler.files.names.push(name)
+        compiler.files[ext].push(fileData);
     };
+    reader.onerror = () => {
+        console.error("Error reading file: " + file.name);
+        alert("Error reading file: " + file.name + ". It will be skipped.");
+        compiler.files.extensions.push(ext); // Still count for completion check
+    };
+    reader.readAsText(file);
 };
 
 
 compiler.extractFileNameJs = function(line){
-    var words;
-    if(line.indexOf("'") != -1){
-        words = line.split("'");
+    const match = line.match(/src\s*=\s*["']([^"']+)["']/);
+    if (match && match[1]) {
+        const path = match[1];
+        const basename = path.split(/[?#]/)[0].split('/').pop();
+        return basename;
     }
-    else{
-        words = line.split('"');
-    }
-    
-    for(var i=0;i<words.length;i++){
-        var word = words[i]
-        if(word.indexOf("src") != -1){
-            word = words[i+1]
-            words = word.split("/");
-            return words[words.length-1]
-        }
-    }
+    return null;
 }
 
 
 compiler.extractFileNameCss = function(line){
-    var words;
-    if(line.indexOf("'") != -1){
-        words = line.split("'");
+    const match = line.match(/href\s*=\s*["']([^"']+)["']/);
+    if (match && match[1]) {
+        const path = match[1];
+        const basename = path.split(/[?#]/)[0].split('/').pop();
+        return basename;
     }
-    else{
-        words = line.split('"');
-    }
-    for(var i=0;i<words.length;i++){
-        var word = words[i]
-
-        if(word.indexOf("href") != -1){
-            word = words[i+1]
-            words = word.split("/");
-            return words[words.length-1]
-
-        }
-    }
+    return null;
 }
 
-compiler.test = function(){
-	var test = `satelliteApp.drawBaseMap = function() {
-    if (map && map.remove) {
-        map.off();
-        map.remove();
+
+compiler.foundLines = { js: [], css: [] };
+compiler.missingLines = { js: [], css: [] };
+var terserAlerted = false;
+
+compiler.processAndDownload = async function() {
+    $("#results").html(""); // Clear previous results display
+    compiler.foundLines = { js: [], css: [] };
+    compiler.missingLines = { js: [], css: [] };
+    // terserAlerted is reset in loadoldDatabaseUpload
+
+    if (!compiler.checkForIssues()) {
+        $("#results").prepend("<div class='alert alert-danger'>Please resolve the issues mentioned in the alerts above before downloading. You might need to re-upload your files.</div>");
+        // Optionally, restore the upload button or guide the user
+        $("#content").html(`
+            <p class="text-danger">Issues found. Please correct them and try again.</p>
+            <button id="clickableStartUpload" title="Select the root folder of your project" data-placement="right" style="width:auto; padding: 10px 20px;" class="btn btn-lg btn-primary tooltiper m-3" onclick="compiler.getFile('uploadInput');">
+                <span style="font-size:larger">Reload Project Directory</span>
+            </button>
+             <input style='visibility:hidden;width:0px;height:0px' type='file' id='uploadInput' webkitdirectory mozdirectory></input>
+        `);
+         // Re-attach event listener for the new input.
+        $("#clickableStartUpload").off("click").on("click", function () { // Use .off().on() to prevent multiple bindings
+            compiler.getFile("uploadInput");
+        });
+        $("#uploadInput").off("change").on("change",function(e){ // Use .off().on()
+            compiler.loadoldDatabaseUpload(e);
+        });
+        return;
     }
 
-    $("#main").html('<div id="map" style="height:100%"></div>')
-	var bool = test.includes("whateverMan")
-    setTimeout(() => {
-        map = L.map('map').setView([13.3,144.5], 3);
-        //draw landmasses
-        var theGrid = L.vectorGrid.slicer(largeWorld, {
-            vectorTileLayerStyles: {
-                sliced:{
-                    weight: 0,
-                        fillColor: '#0a5408',
-                        fillOpacity: 1,
-                        color: "black",
-                        stroke: true,
-                        fill: true,
+    await compiler.findScriptTagsAndCompile();
+
+    var blob = new Blob([compiler.output], {type: "text/html;charset=utf-8"});
+    saveAs(blob, "compiled_app.html");
+    compiler.writeResults(); // Write results after download initiated
+}
+
+
+compiler.findScriptTagsAndCompile = async function(){
+    let content;
+    let mainHtmlFileName = "";
+
+    if (!compiler.files.html || compiler.files.html.length === 0) {
+        alert("Critical Error: No HTML files available to process.");
+        return;
+    }
+    if (compiler.files.html.length === 1) {
+        content = compiler.files.html[0].content;
+        mainHtmlFileName = compiler.files.html[0].name;
+    } else {
+        let indexFile = compiler.files.html.find(f => {
+            const basename = f.name.split('/').pop().toLowerCase();
+            return basename === "index.html" || basename === "index.htm";
+        });
+        if (indexFile) {
+            content = indexFile.content;
+            mainHtmlFileName = indexFile.name;
+        } else {
+            content = compiler.files.html[0].content; // Fallback if no index.html
+            mainHtmlFileName = compiler.files.html[0].name;
+            alert("Warning: Multiple HTML files found, but none are 'index.html' or 'index.htm'. Using the first HTML file found as base: " + mainHtmlFileName);
+        }
+    }
+    $("#results").prepend(`<div class='alert alert-info'>Using <strong>${mainHtmlFileName}</strong> as the base HTML file.</div>`);
+    if(typeof content !== 'string'){
+        alert("Error: Could not load HTML content for processing.");
+        return;
+    }
+
+    var htmlLines = content.split(/\r?\n/);
+    var outputHtmlLines = [];
+
+    let currentJsBundleContents = [];
+    let currentJsBundleFileNames = [];
+    let currentJsBundleFirstLineIndex = -1;
+
+    const finalizeJsBundle = async () => {
+        if (currentJsBundleContents.length > 0) {
+            const combinedJs = currentJsBundleContents.join("\n;\n"); // Add semicolons for safety
+            let processedBundleContent = combinedJs;
+            let bundleStatusMessage = "";
+
+            const shouldMinify = $('input[name="outputFormatOptions"]:checked').val() === 'minified';
+
+            console.log(`[Compiler] Finalizing JS bundle of ${currentJsBundleFileNames.length} file(s): ${currentJsBundleFileNames.join(', ')}. Original combined length: ${combinedJs.length}. Minify requested: ${shouldMinify}`);
+
+            if (shouldMinify) {
+                if (typeof Terser !== 'undefined' && typeof Terser.minify === 'function') {
+                    try {
+                        const minifyResult = await Terser.minify(combinedJs, {
+                            mangle: true,
+                            compress: true,
+                        });
+
+                        if (minifyResult && minifyResult.error) {
+                            console.error(`Terser error for bundle (${currentJsBundleFileNames.join(', ')}):`, minifyResult.error.message || minifyResult.error);
+                            bundleStatusMessage = "(minify failed, bundle uses original content)";
+                        } else if (minifyResult && typeof minifyResult.code === 'string') {
+                            processedBundleContent = minifyResult.code;
+                            bundleStatusMessage = "(minified & inlined)";
+                            console.log(`[Compiler] Bundle (${currentJsBundleFileNames.join(', ')}) minified. New length: ${processedBundleContent.length}`);
+                        } else {
+                            console.warn(`[Compiler] Minify bundle (${currentJsBundleFileNames.join(', ')}): NO error, but 'code' NOT string or result unexpected. Original used.`);
+                            bundleStatusMessage = "(minify warning, bundle uses original content)";
                         }
-            }
-        }).addTo(map);
-    
-    
-        map.on('click', function(e) {
-            console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
-        });        
-    }, 10);
-
-    setTimeout(function(){drawSats.drawByCountry("PRC",new Date());},2000)
-
-}`
-
-console.log(compiler.makeSafeForInternetExplorer(test))
-
-
-}
-
-
-compiler.makeSafeForInternetExplorer = function(code){
-	//remove console.log
-	while(code.indexOf("console.log(") != -1){
-		var open = 1
-		var string = "console.log("
-		var index = code.indexOf("console.log(") + 11
-		var tries = 20
-		while(open > 0 && tries > 0){
-			index++
-			////console.log(innerTries,"index",index)
-			//console.log(innerTries,"open",open)
-			var character = code[index]
-			if(character == "("){
-				open++
-			}
-			else if(character == ")"){
-				open--
-			}
-			string += code[index]
-			tries--
-		}
-		code = code.replace(string,"")
-		
-	}
-	
-	//remove () => 
-	while(code.indexOf("() =>") != -1){
-		code = code.replace("() =>","function()")
-	}
-	
-	
-	//remove .includes
-	while(code.indexOf(".includes(") != -1){
-		var open = 1
-		var string = ".includes("
-		var innerString = ""
-		var index = code.indexOf(".includes(") + 9
-		//console.log(open > 0 && tries > 0,open > 0, tries > 0)
-		while(open > 0){
-			index++
-			var character = code[index]
-			if(character == "("){
-				open++
-			}
-			else if(character == ")"){
-				open--
-			}
-			string += code[index]
-			if(open > 0){
-				innerString += code[index]
-			}
-		}
-		code = code.replace(string,".indexOf(" + innerString + ") != -1")
-	}
-	
-	//remove let 
-	while(code.indexOf("let ") != -1){
-		code = code.replace("let ","var ")
-	}
-	
-	//remove const
-	while(code.indexOf("const ") != -1){
-		code = code.replace("const ","var ")
-	}
-	
-	//remove var []
-	while(code.indexOf("] =") != -1 && tries > 0){
-		console.log("FOUND ISSUE: there are declaring an array as something in here '] ='")
-		
-	}
-
-	return code
-	
-}
-
-compiler.foundLines = {};
-compiler.missingLines = {};
-
-compiler.foundLines.js = []
-compiler.missingLines.js = []
-
-compiler.foundLines.css = []
-compiler.missingLines.css = []
-
-compiler.findScriptTags = function(){
-    compiler.checkForIssues();
-    var content
-    if(compiler.files.html.length == 1){
-        content = compiler.files.html[0].content;
-    }
-    else{
-        for(var i=0;i<compiler.files.html.length;i++){
-            if(compiler.files.html[i].name == "index.html"){
-                content = compiler.files.html[i].content
-            }
-        }
-    }
-    if(content == ""){
-        content = compiler.files.html[0].content;
-    }
-
-    var html = content.split(`\n`)
-    for(var i=0;i<html.length;i++){
-        var line = html[i];
-        //check if this line contains a script tag
-        if(line.indexOf(`<scr`+`ipt`) != -1 && line.indexOf('src=') != -1 && line.indexOf(`</scr`+`ipt>`) != -1){
-            //find the appropriate bit of javascript
-            var found = false;
-            for(var ii=0;ii<compiler.files.js.length;ii++){
-                var jsFile = compiler.files.js[ii];
-                var lineFile = compiler.extractFileNameJs(line)
-                //console.log(lineFile,jsFile.name,lineFile.trim()==jsFile.name)
-                if(lineFile.trim() == jsFile.name.trim()){
-                    console.log(jsFile.name.trim())
-                    html[i] = "<scr"+"ipt>\n//" + jsFile.name.trim() + "\n" + jsFile.content + "\n</scr"+"ipt>";
-                    found = true;
-                    compiler.foundLines.js.push({"original":line.trim(),"replace":jsFile.name})
+                    } catch (e) {
+                        console.error(`Exception during Terser.minify for bundle (${currentJsBundleFileNames.join(', ')}):`, e);
+                        bundleStatusMessage = "(minify exception, bundle uses original content)";
+                    }
+                } else {
+                    bundleStatusMessage = "(Terser not loaded, minification skipped, bundle uses original content)";
+                    if (!terserAlerted) {
+                        alert("Terser library not loaded. JavaScript files will be combined but not minified as minification was requested but unavailable.");
+                        terserAlerted = true;
+                    }
                 }
+            } else { // shouldMinify is false
+                bundleStatusMessage = "(inlined, not minified)";
+                console.log(`[Compiler] Bundle (${currentJsBundleFileNames.join(', ')}) inlined without minification as per user choice.`);
             }
-            if(!found){
-                compiler.missingLines.js.push({"original":line.trim()})
-            }
-        }
+            
+            outputHtmlLines.push("<sc"+"ript>\n" + processedBundleContent + "\n</sc"+"ript>");
 
-        else if(line.indexOf("<link") != -1 && line.indexOf('rel=') != -1 && line.indexOf("href=") != -1){
-            //find the appropriate bit of css
-            var found = false;
-            for(var ii=0;ii<compiler.files.css.length;ii++){
-                var cssFile = compiler.files.css[ii];
-                var lineFile = compiler.extractFileNameCss(line)
-                if(lineFile.trim() == cssFile.name.trim()){
-                    compiler.foundLines.css.push({"original":line.trim(),"replace":cssFile.name})
-                    html[i] = "<st"+"yle>\n//" + cssFile.name.trim() + "\n" + cssFile.content+"\n</st"+"yle>";
-                    found = true;
+            compiler.foundLines.js.push({
+                original: `Bundle of: ${currentJsBundleFileNames.join(', ')}`,
+                replace: `Inlined Bundle ${bundleStatusMessage}`,
+                file: currentJsBundleFileNames.join(' + ')
+            });
+        }
+        currentJsBundleContents = [];
+        currentJsBundleFileNames = [];
+        currentJsBundleFirstLineIndex = -1;
+    };
+
+
+    for (let i = 0; i < htmlLines.length; i++) {
+        var line = htmlLines[i];
+        var isLocalJsScript = false;
+        var jsFileFound = null;
+
+        if (line.match(/<\s*script\s+[^>]*src\s*=\s*[^>]*>/i) && line.indexOf(`</scr`+`ipt>`) != -1) {
+            var extractedBasename = compiler.extractFileNameJs(line);
+            if (extractedBasename) {
+                jsFileFound = (compiler.files.js || []).find(f => f.name.split('/').pop().trim() === extractedBasename.trim());
+                if (jsFileFound) {
+                    isLocalJsScript = true;
+                } else {
+                    compiler.missingLines.js.push({ "original": line.trim(), "extractedFile": extractedBasename + " (external or missing)" });
                 }
-            }
-            if(!found){
-                compiler.missingLines.css.push({"original":line.trim()})
+            } else {
+                 compiler.missingLines.js.push({ "original": line.trim(), "extractedFile": "unknown/unparseable src" });
             }
         }
 
-    }
-    compiler.output = html;
-    compiler.writeResults();
-    var blob = new Blob([html.join(`\n`)], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, "newFile.html");
-}
+        if (isLocalJsScript && jsFileFound) {
+            if (currentJsBundleFirstLineIndex === -1) {
+                currentJsBundleFirstLineIndex = i;
+            }
+            currentJsBundleContents.push(jsFileFound.content);
+            currentJsBundleFileNames.push(jsFileFound.name);
+        } else {
+            await finalizeJsBundle(); // Finalize any existing bundle
 
+            if (line.match(/<\s*link\s+[^>]*rel\s*=\s*["']stylesheet["'][^>]*href\s*=\s*[^>]*>/i)) {
+                var foundCss = false;
+                var extractedCssBasename = compiler.extractFileNameCss(line);
+                if (extractedCssBasename) {
+                    var cssFile = (compiler.files.css || []).find(f => f.name.split('/').pop().trim() === extractedCssBasename.trim());
+                    if (cssFile) {
+                        outputHtmlLines.push("<st"+"yle>\n"+cssFile.content+"\n</st"+"yle>");
+                        compiler.foundLines.css.push({"original":line.trim(),"replace":cssFile.name + " (inlined)", "file": cssFile.name});
+                        foundCss = true;
+                    }
+                }
+                if (!foundCss) {
+                    outputHtmlLines.push(line);
+                    if(extractedCssBasename) compiler.missingLines.css.push({"original":line.trim(), "extractedFile": extractedCssBasename + " (external or missing)"});
+                }
+            } else {
+                outputHtmlLines.push(line);
+            }
+        }
+    }
+
+    await finalizeJsBundle(); // Finalize any pending JS bundle at the end of HTML
+
+    compiler.output = outputHtmlLines.join(`\n`);
+    // Moved compiler.writeResults() to after download in processAndDownload
+}
 compiler.writeResults = function(){
     var html = "";
-    html += "<h3>Altered Javascript Lines</h3>"
-    html += "<table class='table'>"
-        html += "<thead class='thead-dark'><tr>"
-            html += "<th>#</th>"
-            html += "<th>Original Line</th>"
-            html += "<th>Replacement File</th>"
-        html += "</tr></thead><tbody>"
-        for(var i=0;i<compiler.foundLines.js.length;i++){
-            var line = compiler.foundLines.js[i];
-            html += "<tr>"
-                html += "<td>"+(i+1)+"</td>"
-                html += "<td>"+line.original.replace("<","&lt;").replace(">","&gt;")+"</td>"
-                html += "<td>"+line.replace+"</td>"
-            html += "</tr>"
-        }
-    html += '</tbody></table>'
-    html += "<hr>"
-    html += "<h3>Unaltered Javascript Lines</h3>"
-    html += "<table class='table'>"
-        html += "<thead class='thead-dark'><tr>"
-            html += "<th>#</th>"
-            html += "<th>Line</th>"
-        html += "</tr></thead><tbody>"
-        for(var i=0;i<compiler.missingLines.js.length;i++){
-            var line = compiler.missingLines.js[i];
-            html += "<tr>"
-                html += "<td>"+(i+1)+"</td>"
-                html += "<td>"+line.original.replace("<","&lt;").replace(">","&gt;")+"</td>"
-            html += "</tr>"
-        }
-    html += '</tbody></table>'
-    html += "<hr>"
-    html += "<h3>Altered CSS Lines</h3>"
-    html += "<table class='table'>"
-        html += "<thead class='thead-dark'><tr>"
-            html += "<th>#</th>"
-            html += "<th>Original Line</th>"
-            html += "<th>Replacement File</th>"
-        html += "</tr></thead><tbody>"
-        for(var i=0;i<compiler.foundLines.css.length;i++){
-            var line = compiler.foundLines.css[i];
-            html += "<tr>"
-                html += "<td>"+(i+1)+"</td>"
-                html += "<td>"+line.original.replace("<","&lt;").replace(">","&gt;")+"</td>"
-                html += "<td>"+line.replace+"</td>"
-            html += "</tr>"
-        }
-    html += '</tbody></table>'
-    html += "<hr>"
-    html += "<h3>Unaltered CSS Lines</h3>"
-    html += "<table class='table'>"
-        html += "<thead class='thead-dark'><tr>"
-            html += "<th>#</th>"
-            html += "<th>Line</th>"
-        html += "</tr></thead><tbody>"
-        for(var i=0;i<compiler.missingLines.css.length;i++){
-            var line = compiler.missingLines.css[i];
-            html += "<tr>"
-                html += "<td>"+(i+1)+"</td>"
-                html += "<td>"+line.original.replace("<","&lt;").replace(">","&gt;")+"</td>"
-            html += "</tr>"
-        }
-    html += '</tbody></table>'
 
+    html += "<h4>Processed JavaScript Files/Bundles</h4>"
+    if (compiler.foundLines.js.length > 0) {
+        html += "<table class='table table-sm table-striped table-bordered'>"
+            html += "<thead class='thead-dark'><tr>"
+                html += "<th>Original Script(s) / Bundle</th>"
+                html += "<th>Action</th>"
+            html += "</tr></thead><tbody>"
+            for(var i=0;i<compiler.foundLines.js.length;i++){
+                var line = compiler.foundLines.js[i];
+                html += "<tr>"
+                    html += "<td><code>"+line.original.replace(/</g,"&lt;").replace(/>/g,"&gt;")+"</code><br><small>Path(s): "+line.file+"</small></td>"
+                    html += `<td>${line.replace}</td>`
+                html += "</tr>"
+            }
+        html += '</tbody></table>';
+    } else {
+        html += "<p class='text-muted'>No local JavaScript files were processed and inlined.</p>";
+    }
+    html += "<hr>";
 
-    $("#results").html(html)
+    if (compiler.missingLines.js.length > 0) {
+        html += "<h4>Unprocessed/External JavaScript Tags</h4>"
+        html += "<p class='small text-muted'>These script tags were found but the referenced file (basename: <code>extracted filename</code>) was not in your upload, or they are external CDN links (which are kept as is).</p>"
+        html += "<table class='table table-sm table-striped table-bordered'>"
+            html += "<thead class='thead-light'><tr>"
+                html += "<th>Original Tag</th>"
+                html += "<th>Extracted Basename/Status</th>"
+            html += "</tr></thead><tbody>"
+            for(var i=0;i<compiler.missingLines.js.length;i++){
+                var line = compiler.missingLines.js[i];
+                html += "<tr>"
+                    html += "<td><code>"+line.original.replace(/</g,"&lt;").replace(/>/g,"&gt;")+"</code></td>"
+                    html += "<td><code>"+(line.extractedFile || "N/A")+"</code></td>"
+                html += "</tr>"
+            }
+        html += '</tbody></table>';
+        html += "<hr>";
+    }
 
+    html += "<h4>Processed CSS Files</h4>";
+    if (compiler.foundLines.css.length > 0) {
+        html += "<table class='table table-sm table-striped table-bordered'>"
+            html += "<thead class='thead-dark'><tr>"
+                html += "<th>Original Link Tag</th>"
+                html += "<th>Action / Inlined File Path</th>"
+            html += "</tr></thead><tbody>"
+            for(var i=0;i<compiler.foundLines.css.length;i++){
+                var line = compiler.foundLines.css[i];
+                html += "<tr>"
+                    html += "<td><code>"+line.original.replace(/</g,"&lt;").replace(/>/g,"&gt;")+"</code></td>"
+                    html += `<td>${line.replace} <br><small>Path: ${line.file}</small></td>`
+                html += "</tr>"
+            }
+        html += '</tbody></table>';
+    } else {
+        html += "<p class='text-muted'>No local CSS files were processed and inlined.</p>";
+    }
+    html += "<hr>";
+
+    if (compiler.missingLines.css.length > 0) {
+        html += "<h4>Unprocessed/External CSS Link Tags</h4>"
+        html += "<p class='small text-muted'>These link tags were found but the referenced file (basename: <code>extracted filename</code>) was not in your upload, or they are external CDN links (which are kept as is).</p>"
+        html += "<table class='table table-sm table-striped table-bordered'>"
+            html += "<thead class='thead-light'><tr>"
+                html += "<th>Original Tag</th>"
+                html += "<th>Extracted Basename/Status</th>"
+            html += "</tr></thead><tbody>"
+            for(var i=0;i<compiler.missingLines.css.length;i++){
+                var line = compiler.missingLines.css[i];
+                html += "<tr>"
+                    html += "<td><code>"+line.original.replace(/</g,"&lt;").replace(/>/g,"&gt;")+"</code></td>"
+                    html += "<td><code>"+(line.extractedFile || "N/A")+"</code></td>"
+                html += "</tr>"
+            }
+        html += '</tbody></table>';
+    }
+
+    // Append to results, info message about base HTML is prepended earlier
+    $("#results").append(html);
 }
 
-
-
-    </script>
-
+</script>
 </html>
